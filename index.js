@@ -62,23 +62,23 @@ let topMovies = [
 
 //Get requests
 app.send('/', (req, res) => {
-    res.send('Welcome to my movie list!');
+    res.send('Welcome to my movie list!')
 });
 
 app.get('/documentation', (req, res) => {
-  res.sendFile('public/documentation.html', { root: __dirname });
+  res.sendFile('public/documentation.html', { root: __dirname })
 });
 
 app.get('/movies', (req, res) => {
-  res.json(topMovies);
+  res.json(topMovies)
 });
 
 app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send('Something is broken');
+  console.error(err.stack)
+  res.status(500).send('Something is broken')
 });
 
 //listen for requests
 app.listen(8080, () => {
-  console.log('Your app is listening on port 8080');
+  console.log('Your app is listening on port 8080')
 });
