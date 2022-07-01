@@ -36,7 +36,7 @@ let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
 { useNewUrlParser: true, useUnifiedTopology: true });*/
 
 //new connection to the online database through atlas/heroku
-mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 
 app.use(cors({
@@ -275,6 +275,8 @@ app.use((err, req, res, next) => {
   console.error(err.stack)
   res.status(500).send('Something is broken')
 });
+
+app.use(express.static('public'));
 
 //listen for requests
 const port = process.env.PORT || 8080;
