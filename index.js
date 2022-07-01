@@ -31,7 +31,12 @@ const Users = Models.User;
 
 let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
 
-mongoose.connect('mongodb://localhost:27017/myFlixDB', 
+//commented out until testing is needed locally
+/*mongoose.connect('mongodb://localhost:27017/myFlixDB', 
+{ useNewUrlParser: true, useUnifiedTopology: true });*/
+
+//new connection to the online database through atlas/heroku
+mongoose.connect(process.env.CONNECTION_URI, 
 { useNewUrlParser: true, useUnifiedTopology: true });
 
 app.use(cors({
