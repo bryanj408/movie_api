@@ -36,8 +36,8 @@ let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
 { useNewUrlParser: true, useUnifiedTopology: true });*/
 
 //new connection to the online database through atlas/heroku
-mongoose.connect(process.env.CONNECTION_URI, 
-{ useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+
 
 app.use(cors({
   origin: (origin, callback) => {
@@ -281,3 +281,4 @@ const port = process.env.PORT || 8080;
 app.listen(port, '0.0.0.0',() => {
  console.log('Listening on Port ' + port);
 });
+
