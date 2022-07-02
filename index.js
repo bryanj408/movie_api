@@ -18,11 +18,11 @@ app.use(cors());
 app.use(bodyParser.json());
 
 //commented out until testing is needed locally
-/*mongoose.connect('mongodb://localhost:27017/myFlixDB', 
-{ useNewUrlParser: true, useUnifiedTopology: true });*/
+mongoose.connect('mongodb://localhost:27017/myFlixDB', 
+{ useNewUrlParser: true, useUnifiedTopology: true });
 
 //new connection to the online database through atlas/heroku
-mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+/*mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });*/
 app.use(morgan('common'));
 app.use(bodyParser.urlencoded({ extended: true }));
 let auth = require('./auth')(app);
@@ -41,12 +41,15 @@ app.use(cors({
 }));
 
 //Create user
-app.post('/users',[
+app.post('/users',
+[
   check('Username', 'Username is required').isLength({min: 5}),
   check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
   check('Password', 'Password is required').not().isEmpty(),
   check('Email', 'Email does not appear to be valid').isEmail()
-],(req,res)=>{
+],
+
+(req,res)=>{
   let errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(422).json({ errors: errors.array() });
@@ -54,7 +57,7 @@ app.post('/users',[
 
   let hashedPassword = Users.hashPassword(req.body.Password);
   Users.findOne({Username:req.body.Username})
-  .then(user=>{
+  .then(user => {
     if(user){
       res.status(400).send(req.body.Username + ' already exists!')
     }else{
@@ -65,14 +68,14 @@ app.post('/users',[
         Email: req.body.Email,
         Birthday: req.body.Birthday
       })
-      .then(user=> res.status(201).json(user))
-      .catch(error=>{
+      .then(user => res.status(201).json(user))
+      .catch(error => {
         console.error(error);
         res.status(500).send('Error: ' + error)
       })
     }
   })
-  .catch(error=>{
+  .catch(error => {
     console.error(error);
     res.status(500).send('Error: ' + error)
   })
@@ -264,7 +267,6 @@ const port = process.env.PORT || 8080;
 app.listen(port, '0.0.0.0',() => {
  console.log('Listening on Port ' + port);
 });
-
 
 
 
