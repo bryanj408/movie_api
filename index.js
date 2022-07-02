@@ -1,35 +1,21 @@
 const express = require('express');
-  const bcrypt = require('bcrypt'),
+  app = express(),
+  bcrypt = require('bcrypt'),
   bodyParser = require('body-parser'),
   morgan = require('morgan'),
   uuid = require('uuid'),
   fs = require('fs'),
   path = require('path'),
   mongoose = require('mongoose'),
-  Models = require('./models.js');
-
-const cors = require('cors');
-app.use(cors());
-
-let auth = require('./auth')(app);
-  
-
-const app = express();
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
-
-
-const passport = require('passport');
-require('./passport');
+  Models = require('./models.js'),
+  Movies = Models.Movie,
+  Users = Models.User,
+  cors = require('cors');
 
 const { check, validationResult } = require('express-validator');
 
-const Movies = Models.Movie;
-const Users = Models.User;
-
-let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
+app.use(cors());
+app.use(bodyParser.json());
 
 //commented out until testing is needed locally
 /*mongoose.connect('mongodb://localhost:27017/myFlixDB', 
@@ -37,8 +23,11 @@ let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
 
 //new connection to the online database through atlas/heroku
 mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
-
-
+app.use(morgan('common'));
+app.use(bodyParser.urlencoded({ extended: true }));
+let auth = require('./auth')(app);
+const passport = require('passport');
+require('./passport');
 
 app.use(cors({
   origin: (origin, callback) => {
@@ -50,9 +39,6 @@ app.use(cors({
     return callback(null, true);
   }
 }));
-
-
-const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {flags: 'a'})
 
 app.post('/users', 
   [
