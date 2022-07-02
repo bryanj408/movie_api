@@ -9,7 +9,7 @@ const express = require('express');
   Models = require('./models.js');
 
 const cors = require('cors');
-app.user(cors());
+app.use(cors());
 
 let auth = require('./auth')(app);
   
