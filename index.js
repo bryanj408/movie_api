@@ -18,11 +18,11 @@ app.use(cors());
 app.use(bodyParser.json());
 
 //commented out until testing is needed locally
-mongoose.connect('mongodb://localhost:27017/myFlixDB', 
-{ useNewUrlParser: true, useUnifiedTopology: true });
+/*mongoose.connect('mongodb://localhost:27017/myFlixDB', 
+{ useNewUrlParser: true, useUnifiedTopology: true });*/
 
 //new connection to the online database through atlas/heroku
-/*mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });*/
+mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 app.use(morgan('common'));
 app.use(bodyParser.urlencoded({ extended: true }));
 let auth = require('./auth')(app);
