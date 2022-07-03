@@ -26,7 +26,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 let auth = require('./auth')(app);
 const passport = require('passport');
 require('./passport');
-
+/*
 app.use(cors({
   origin: (origin, callback) => {
     if(!origin) return callback(null, true);
@@ -36,7 +36,7 @@ app.use(cors({
     }
     return callback(null, true);
   }
-}));
+}));*/
 
 //Create user
 app.post('/users',
