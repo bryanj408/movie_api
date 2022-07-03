@@ -11,7 +11,7 @@ const express = require('express');
   cors = require('cors');
 
 const { check, validationResult } = require('express-validator');
-const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), { flags: 'a' });
+
 app.use(cors());
 app.use(bodyParser.json());
 
