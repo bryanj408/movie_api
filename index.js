@@ -4,8 +4,6 @@ const express = require('express');
   bodyParser = require('body-parser'),
   morgan = require('morgan'),
   uuid = require('uuid'),
-  fs = require('fs'),
-  path = require('path'),
   mongoose = require('mongoose'),
   Models = require('./models.js'),
   Movies = Models.Movie,
@@ -13,7 +11,7 @@ const express = require('express');
   cors = require('cors');
 
 const { check, validationResult } = require('express-validator');
-
+const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), { flags: 'a' });
 app.use(cors());
 app.use(bodyParser.json());
 
