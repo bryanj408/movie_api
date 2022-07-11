@@ -26,7 +26,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 let auth = require('./auth')(app);
 const passport = require('passport');
 require('./passport');
-/*
+
+let allowedOrigins = ['http://localhost:8080', 'http://testsite.com', 'http://localhost:1234'];
+
 app.use(cors({
   origin: (origin, callback) => {
     if(!origin) return callback(null, true);
@@ -36,7 +38,7 @@ app.use(cors({
     }
     return callback(null, true);
   }
-}));*/
+}));
 
 //Create user
 app.post('/users',
@@ -206,7 +208,8 @@ app.get('/documentation', (req, res) => {
 });
 
 //Display all movies
-app.get('/movies', passport.authenticate('jwt', {session: false}), (req, res) => {
+//Temporarily removed 'passport.authenticate('jwt', {session: false}),' to allow access to api
+app.get('/movies', /*^^*/ function (req, res) => {
   Movies.find()
   .then((movies) => {
     res.status(201).json(movies);
