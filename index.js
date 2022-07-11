@@ -27,6 +27,7 @@ let auth = require('./auth')(app);
 const passport = require('passport');
 require('./passport');
 
+/* We don't need "let allowedOrigins || app.use(cors) because we have app.use(cors)) as a "catch-all" and don't need to stipulate certain origins.
 let allowedOrigins = ['http://localhost:8080', 'http://testsite.com', 'http://localhost:1234'];
 
 app.use(cors({
@@ -38,7 +39,7 @@ app.use(cors({
     }
     return callback(null, true);
   }
-}));
+}));*/
 
 //Create user
 app.post('/users',
