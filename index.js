@@ -210,7 +210,7 @@ app.get('/documentation', (req, res) => {
 
 //Display all movies
 //Temporarily removed 'passport.authenticate('jwt', {session: false}),' to allow access to api
-app.get('/movies', function (req, res) {
+app.get('/movies', passport.authenticate('jwt', {session: false}), (req, res) => {
   Movies.find()
   .then((movies) => {
     res.status(201).json(movies);
