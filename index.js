@@ -27,10 +27,10 @@ let auth = require('./auth')(app);
 const passport = require('passport');
 require('./passport');
 
-/* We don't need "let allowedOrigins || app.use(cors) because we have app.use(cors)) as a "catch-all" and don't need to stipulate certain origins.
-let allowedOrigins = ['http://localhost:8080', 'http://testsite.com', 'http://localhost:1234'];
+//We don't need "let allowedOrigins || app.use(cors) because we have app.use(cors)) as a "catch-all" and don't need to stipulate certain origins.
+//let allowedOrigins = ['http://localhost:8080', 'http://testsite.com', 'http://localhost:1234', 'https://myflixnetflix.herokuapp.com/movies'];
 
-app.use(cors({
+/*app.use(cors({
   origin: (origin, callback) => {
     if(!origin) return callback(null, true);
     if(allowedOrigins.indexOf(origin) === -1){ // If a specific origin isn’t found on the list of allowed origins
