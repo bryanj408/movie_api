@@ -1,20 +1,102 @@
-//import express module to use locally
-const express = require('express');
-//used to route HTTP requests and responses
-const app = express();
-const http = require('http');
+const express = require('express'),
+    app = express();
 
-http.createServer((request, response) => {
-    response.writeHead(200, {'Content-Type': 'text/plain'});
-    response.end('Welcome to my book club!\n');
-}).listen(8080);
+const movieObject = [
+    {
+        title: 'The Royal Tenenbaums',
+        director: 'Wes Anderson'
+    },
+    {
+        title: 'The Life Aquatic',
+        director: 'Wes anderson'
+    },
+    {
+        title: 'The Darjeeling Limited',
+        director: 'Wes Anderson'
+    },
+    {
+        title: 'Fantastic Mr. Fox',
+        director: 'Wes Anderson'
+    },
+    {
+        title: 'Moonrise Kingdom',
+        director: 'Wes anderson'
+    },
+    {
+        title: 'The Grand Budapest Hotel',
+        director: 'Wes Anderson'
+    },
+    {
+        title: 'The French Dispatch',
+        director: 'Wes Anderson'
+    },
+    {
+        title: 'Isle of Dogs',
+        director: 'Wes Anderson'
+    },
+    {
+        title: 'Rushmore',
+        director: 'Wes Anderson'
+    },
+    {
+        title: 'bottle rocket',
+        director: 'Wes Anderson'
+    },
+];
 
-console.log('My first node test is running on port 8080.');
+app.use(express.static('public'));
+
+app.get('/', (req, res) => {
+    res.send('Welcome to the home page baby');
+});
+
+app.get('/movies', (req, res) => {
+    res.json(movieObject);
+});
+
+app.listen(8080, () => {
+    console.log('Your app is listening on port 8080');
+});
 
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+//app.use() is how you invoke your middleware functions
+// the common parameter here specifies that requests should be logged using Morang's 
+//"common" format, which logs basic data such as IP address, time of request, request method
+//and path, as well as the status code that was sent back as a repsonse. 
+//app.use(morgan('common'));
+
+//creat a write stream (in append mode)
+//a 'log.txt' file is created in a root directory
+// const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {flags: 'a'})
+
+// //setup the logger
+// app.use(morgan('combined', {stream: accessLogStream}));
+
+// app.get('/', (req, res) => {
+//     res.send('Welcome to my app!');
+// });
+
+// app.get('/secreturl', (req, res) => {
+//     res.send('This is a super secret file');
+// });
+
+// app.listen(8080, () => {
+//     console.log('Your app is listening on port 8080');
+// });
 
 
 
