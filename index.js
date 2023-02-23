@@ -1,4 +1,5 @@
 const express = require('express'),
+    morgan = require('morgan');
     app = express();
 
 const movieObject = [
@@ -44,7 +45,10 @@ const movieObject = [
     },
 ];
 
+//serves static files from public folder using express.static middleware
 app.use(express.static('public'));
+//logs tracking info to terminal using morgan middleware
+app.use(morgan('common'));
 
 app.get('/', (req, res) => {
     res.send('Welcome to the home page baby');
@@ -52,6 +56,13 @@ app.get('/', (req, res) => {
 
 app.get('/movies', (req, res) => {
     res.json(movieObject);
+});
+
+//error handling function (erro.stack will log error to terminal)
+//must be after all middleware functions (i.e. use/get/post) but before app.listen
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Something Broke!');
 });
 
 app.listen(8080, () => {
