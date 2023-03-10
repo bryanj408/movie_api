@@ -1,8 +1,13 @@
 const express = require('express'),
-    morgan = require('morgan');
-    app = express();
+    uuid = require('uuid'),
+    bodyParser = require('body-parser');
 
-const movieObject = [
+const app = express();
+
+app.use(bodyParser.json());
+
+
+const movies = [
     {
         title: 'The Royal Tenenbaums',
         director: 'Wes Anderson'
@@ -45,122 +50,51 @@ const movieObject = [
     },
 ];
 
-//serves static files from public folder using express.static middleware
-app.use(express.static('public'));
-//logs tracking info to terminal using morgan middleware
-app.use(morgan('common'));
-
-app.get('/', (req, res) => {
-    res.send('Welcome to the home page baby');
-});
-
+//returns full list of movies
 app.get('/movies', (req, res) => {
-    res.json(movieObject);
+    res.json(movies);
 });
 
-//error handling function (erro.stack will log error to terminal)
-//must be after all middleware functions (i.e. use/get/post) but before app.listen
-app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).send('Something Broke!');
+//returns description, director, actors, etc of specific movie
+app.get('/movies/title', (req, res) => {
+    res.send('Here is the title you are looking for');
+});
+
+//returns a specific genre from a movie
+app.get('/movies/title/genre', (req, res) => {
+
+});
+
+//returns info on a director from a specific movie
+app.get('/movies/title/director', (req, res) => {
+
+});
+
+//allow new users to register an account (may or may not require id at endpoint)
+app.post('/users/id', (req, res) => {
+
+});
+
+//allow new users to update their personal info
+app.put('/users/id', (req, res) => {
+
+});
+
+//allows users to add a movie to their favorites list in their profile
+app.post('/users/id/favoriteMovie', (req, res) => {
+
+});
+
+//allows users to delete a movie from their favorites list in their profile
+app.delete('/users/id/favoriteMovie', (req, res) => {
+
+});
+
+//allows users to delete/remove their profile entirely
+app.delete('/users/id', (req, res) => {
+
 });
 
 app.listen(8080, () => {
-    console.log('Your app is listening on port 8080');
+    console.log('Your app is running on port 8080.');
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//app.use() is how you invoke your middleware functions
-// the common parameter here specifies that requests should be logged using Morang's 
-//"common" format, which logs basic data such as IP address, time of request, request method
-//and path, as well as the status code that was sent back as a repsonse. 
-//app.use(morgan('common'));
-
-//creat a write stream (in append mode)
-//a 'log.txt' file is created in a root directory
-// const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {flags: 'a'})
-
-// //setup the logger
-// app.use(morgan('combined', {stream: accessLogStream}));
-
-// app.get('/', (req, res) => {
-//     res.send('Welcome to my app!');
-// });
-
-// app.get('/secreturl', (req, res) => {
-//     res.send('This is a super secret file');
-// });
-
-// app.listen(8080, () => {
-//     console.log('Your app is listening on port 8080');
-// });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//NOT NEEDED BUT WANT FOR REFERENCE//
-
-// //imported http module to create server
-// const http = require('http'),
-//     fs = require('fs'),
-//     url = require('url');
-
-// //built-in function, createServer from http module
-// http.createServer((request, response) => {
-//     let addr = request.url,
-//         q = url.parse(addr, true),
-//         filePath = '';
-
-//     //appendFile() appends something to a file's content rather than overwriting it
-//     //adding url and timestamp everytime someone requests from server
-//     fs.appendFile('log.txt', 'URL: ' + addr + '\nTimestamp: ' + new Date() + '\n\n', (err) => {
-//         if (err) {
-//             console.log(err);
-//         } else { 
-//             console.log('Added to log.');
-//         }
-//     });
-
-//     //looks for pathname or defaults to home page if filepath can't be found
-//     if (q.pathname.includes('documentation')) {
-//         filePath = (__dirname + '/documentation.html');
-//     } else {
-//         filePath = 'index.html';
-//     }
-
-//     fs.readFile(filePath, (err, data) => {
-//         if (err) {
-//             throw err;
-//         }
-
-//         response.writeHead(200, {'Content-Type': 'text/plain'});
-//         response.write(data);
-//         response.end();
-//     });
-// }).listen(8080);
-// console.log('My test server is running on port 8080');
