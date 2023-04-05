@@ -1,54 +1,19 @@
 const express = require('express'),
     uuid = require('uuid'),
-    bodyParser = require('body-parser');
+    bodyParser = require('body-parser'),
+    mongoose = require('mongoose'),
+    Models = require('./models.js');
+
+const Movies = Models.Movie;
+const Users = Models.User;
 
 const app = express();
-
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
+mongoose.connect('mongodb://localhost:8080/movie_api', 
+{ useNewUrlParser: true, useUnifiedTopology: true });
 
-const movies = [
-    {
-        title: 'The Royal Tenenbaums',
-        director: 'Wes Anderson'
-    },
-    {
-        title: 'The Life Aquatic',
-        director: 'Wes anderson'
-    },
-    {
-        title: 'The Darjeeling Limited',
-        director: 'Wes Anderson'
-    },
-    {
-        title: 'Fantastic Mr. Fox',
-        director: 'Wes Anderson'
-    },
-    {
-        title: 'Moonrise Kingdom',
-        director: 'Wes anderson'
-    },
-    {
-        title: 'The Grand Budapest Hotel',
-        director: 'Wes Anderson'
-    },
-    {
-        title: 'The French Dispatch',
-        director: 'Wes Anderson'
-    },
-    {
-        title: 'Isle of Dogs',
-        director: 'Wes Anderson'
-    },
-    {
-        title: 'Rushmore',
-        director: 'Wes Anderson'
-    },
-    {
-        title: 'bottle rocket',
-        director: 'Wes Anderson'
-    },
-];
 
 //returns full list of movies
 app.get('/movies', (req, res) => {
