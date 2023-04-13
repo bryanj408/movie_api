@@ -19,10 +19,9 @@ mongoose.connect('mongodb://localhost:27017/movie_api',
 
 
 //returns full list of movies
-app.get('movies', (req, res) => {
+app.get('/movies', (req, res) => {
     Movies.find()
     .then((movies) => {
-        res.json(movies);
         res.status(201).json(movies);
     })
     .catch((err) => {
@@ -32,8 +31,15 @@ app.get('movies', (req, res) => {
 });
 
 //returns description, director, actors, etc of specific movie
-app.get('/movies/title', (req, res) => {
-    res.send('Here is the title you are looking for');
+app.get('/movies/:title', (req, res) => {
+    Movies.findOne({ Title: req.params.title })
+    .then((movie) => {
+        res.status(201).json(movie);
+    })
+    .catch((err) => {
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+    });
 });
 
 //returns a specific genre from a movie
@@ -59,7 +65,7 @@ app.post('/users', (req, res) => {
     Users.findOne({ Username: req.body.Username })
     .then((user) => {
         if (user) {
-            return res.status(400).send(req.body.Username + 'already exists');
+            return res.status(400).send(req.body.Username + ' already exists');
         } else {
             Users
             .create({
