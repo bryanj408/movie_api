@@ -30,7 +30,7 @@ app.get('/movies', (req, res) => {
     });
 });
 
-//returns description, director, actors, etc of specific movie
+//returns description, director, actors, etc of specific movie by title
 app.get('/movies/:title', (req, res) => {
     Movies.findOne({ Title: req.params.title })
     .then((movie) => {
@@ -42,9 +42,76 @@ app.get('/movies/:title', (req, res) => {
     });
 });
 
-//returns a specific genre from a movie
-app.get('/movies/title/genre', (req, res) => {
+//returns information on a specific genre
+app.get('/movies/genre/thriller', (req, res) => {
+    Movies.find({ 'Genre.Name':'Thriller' })
+    .then((movies) => {
+        res.status(201).json(movies);
+    })
+    .catch((err) => {
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+    });
+});
 
+//returns information on a specific genre
+app.get('/movies/genre/drama', (req, res) => {
+    Movies.find({ 'Genre.Name':'Drama' })
+    .then((movies) => {
+        res.status(201).json(movies);
+    })
+    .catch((err) => {
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+    });
+});
+
+//returns information on a specific genre
+app.get('/movies/genre/action', (req, res) => {
+    Movies.find({ 'Genre.Name':'Action' })
+    .then((movies) => {
+        res.status(201).json(movies);
+    })
+    .catch((err) => {
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+    });
+});
+
+//returns information on a specific genre
+app.get('/movies/genre/comedy', (req, res) => {
+    Movies.find({ 'Genre.Name':'Comedy' })
+    .then((movies) => {
+        res.status(201).json(movies);
+    })
+    .catch((err) => {
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+    });
+});
+
+//returns information on a specific genre
+app.get('/movies/genre/war', (req, res) => {
+    Movies.find({ 'Genre.Name':'War' })
+    .then((movies) => {
+        res.status(201).json(movies);
+    })
+    .catch((err) => {
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+    });
+});
+
+//returns information on a specific genre
+app.get('/movies/genre/sci-fi', (req, res) => {
+    Movies.find({ 'Genre.Name':'Sci-Fi' })
+    .then((movies) => {
+        res.status(201).json(movies);
+    })
+    .catch((err) => {
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+    });
 });
 
 //returns info on a director from a specific movie
