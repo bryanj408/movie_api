@@ -14,6 +14,12 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+//(app) ensures that Express is available in the auth.js file as well
+//called this AFTER bodyParser middleware
+let auth = require('./auth')(app);
+const passport = require('passport');
+require('./passport');
+
 //changed localhost:8080 to 27017 to get postman to communicate
 mongoose.connect('mongodb://localhost:27017/movie_api', 
 { useNewUrlParser: true, useUnifiedTopology: true });
