@@ -26,13 +26,13 @@ mongoose.connect('mongodb://localhost:27017/movie_api',
 
 
 //returns full list of movies
-app.get('/movies', (req, res) => {
+app.get('/movies', passport.authenticate('jwt', { session: false}), (req, res) => {
     Movies.find()
     .then((movies) => {
         res.status(201).json(movies);
     })
-    .catch((err) => {
-        console.error(err);
+    .catch((error) => {
+        console.error(error);
         res.status(500).send('Error: ' + err);
     });
 });
